@@ -34,7 +34,7 @@ async function loadProducts() {
                 const product = products[key];
                 
                 // Filter for the category 'plants' (case insensitive)
-                if (product.category && product.category.toLowerCase() === 'ManureandFertailizer') {
+                if (product.category && product.category.toLowerCase() === 'manureandfertailizer') {
                     const listItem = document.createElement('li');
                     listItem.classList.add('product');
                     
