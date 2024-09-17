@@ -29,10 +29,14 @@ async function loadProducts() {
 
             productList.innerHTML = ''; // Clear any existing content
 
-            // Iterate through all products
-            Object.keys(products).forEach(key => {
-                const product = products[key];
-                
+            // Convert products object into an array and sort by product name (A-Z)
+            const sortedProducts = Object.keys(products).map(key => ({
+                key,
+                ...products[key]
+            })).sort((a, b) => a.name.localeCompare(b.name));
+
+            // Iterate through sorted products
+            sortedProducts.forEach(product => {
                 // Filter for the category 'plants' (case insensitive)
                 if (product.category && product.category.toLowerCase() === 'plants') {
                     const listItem = document.createElement('li');
@@ -42,8 +46,8 @@ async function loadProducts() {
                     listItem.innerHTML = `
                         <div class="product-contents">
                             <div class="product-image">
-                                <a href="shop-single.html?id=${key}">
-                                    <img src="${product.mainImageURL}" alt="Product" class="w-full h-auto">
+                                <a href="shop-single.html?id=${product.key}">
+                                    <img src="${product.mainImageURL}" alt="Product" class="product-img">
                                 </a>
                                 <div class="shop-action">
                                     <ul>
@@ -56,12 +60,12 @@ async function loadProducts() {
                                     <a href="#">${product.category}</a>
                                 </div>
                                 <h4 class="product-title">
-                                    <a href="shop-single.html?id=${key}">${product.name}</a>
+                                    <a href="shop-single.html?id=${product.key}">${product.name}</a>
                                 </h4>
                                 <div hidden class="price">
-                                    <span   >$${product.price.toFixed(2)}</span>
+                                    <span>$${product.price.toFixed(2)}</span>
                                 </div>
-                                <a href="shop-single.html?id=${key}" class="cart-btn"><i class="fas fa-shopping-bag"></i> View Product</a>
+                                <a href="shop-single.html?id=${product.key}" class="cart-btn"><i class="fas fa-shopping-bag"></i> View Product</a>
                             </div>
                         </div>
                     `;
